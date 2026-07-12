@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Emissions Analysis Tool</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+  </head>
+
+
+  <div id="help-overlay">
+    <div id="help-modal">
+      <button id="help-close">x</button>
+
+      <h2>World view</h2>
+      <p>The world view displays a global overview of emissions at a set time. The area of a circle is proportional to the total GHG emissions of the country.</p>
+      <p>Circles are coloured according to the percentage change of total emissions over a set period of time. This is done on a log scale. </p>
+      <p>The overlap correction checkbox toggles a force simulation on the circles. This distorts the geography, but allows for inspection of countries that may be otherwise obscured.</p>
+      
+      <h2>Timeline</h2>
+      <p> Move the circular handle to change selected year. Move the bar shaped handle to change the year in which the percentage change calculations start from.</p>
+      
+      <h2>Country view</h2>
+      <p>The country view displays a detailed breakdown of a country's emissions over time. Hover over the areas in order to see which colours correspond to which sectors. You are able to filter the gases or switch from absolute to relative measurements.</p>
+    </div>
+  </div>
+
+  <body>
+    <h1>Historical GHG Emissions Analysis</h1>
+    
+    <button id="help-btn">Help</button>
+    
+    <div class="visualisations">
+      <div class="vis-container">
+        <div class="heading-bar">
+          <h2 id="world-heading-text">World Emissions in </h2>
+            <label class="checkbox-label">
+              Overlap correction
+              <input type="checkbox" id="force-checkbox" class="force-checkbox">
+            </label>
+        </div>
+        <svg id="worldSVG" width="60vw" height="70vh"></svg>
+      </div>
+      <div class="vis-container">
+        <div class="heading-bar">
+          <h2 id="country-heading-text">Country</h2>
+          <label class="checkbox-label">
+            Relative values
+            <input type="checkbox" id="relative-checkbox" class="relative-checkbox">
+          </label>
+          <div id="emission-dropdown">
+            <button id="emission-toggle">Filter gases &#9662</button>
+            <div id="emission-menu">
+              <label><input type="checkbox" name="emission-type" value="CO2">CO2</label><br>
+              <label><input type="checkbox" name="emission-type" value="GWP_100_AR5_CH4">CH4 (Methane)</label><br>
+              <label><input type="checkbox" name="emission-type" value="GWP_100_AR5_N2O">N2O (Nitrous Oxide)</label><br>
+              <label><input type="checkbox" name="emission-type" value="GWP_100_AR5_F-gases">F-gases</label>
+            </div>
+          </div>
+
+        </div>
+        <svg id="stackedAreaSVG" width="30vw" height="70vh"></svg>
+      </div>
+    </div>
+
+    <div class="slider-container" id="years-slider"></div>
+    
+    <div id="tooltip"></div>
+    <script src="./js/index.js" type="module"></script>
+  </body>
+</html>

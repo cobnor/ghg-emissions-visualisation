@@ -1,0 +1,369 @@
+body {
+  overflow: hidden;
+  font-family: 'Mona Sans';
+  color: white;
+  background-color: #0F151A;
+
+  /* Grid background */
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+
+  background-size: 16px 16px;
+}
+
+h1{
+  text-shadow: 2px 2px 2px black;
+  text-align: center;
+  letter-spacing: -0.025em;
+  pointer-events: none;
+  user-select: none;
+  margin:0.75rem;
+}
+h2{
+  margin:0;
+  font-weight: 500;
+  font-size: 1.25rem;
+  text-align: left;
+  left:12px;
+  transition: opacity 0.25s;
+  pointer-events: none;
+  user-select: none;
+
+}
+.visualisations {
+  display:flex;
+  gap:0.5rem;
+  justify-content: space-around;
+}
+
+.vis-container {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 12px;
+  padding-top:6px;
+  border-radius: 8px;
+  border: 1px solid #3d3d3d;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  flex-grow:1;
+}
+
+#stackedAreaSVG{
+  overflow:visible;
+}
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  font-family: 'Mona Sans', sans-serif;
+  font-size: 0.8rem;
+  color: #aaa;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.1s;
+}
+.checkbox-label:hover {
+  color: #fff;
+}
+
+.force-checkbox, .relative-checkbox {
+  accent-color: #4a9aba;
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+}
+
+
+.heading-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  gap:2rem;
+}
+/* World view styling */
+
+.sphere{
+  fill:#19252e;
+  stroke: #4b4b4b;
+  stroke-width: 1;
+}
+.country{
+  fill:#94949455;
+  stroke:#7d7d7d;
+  stroke-width: 0.5;
+  transition: opacity 0.5s;
+}
+.emissions-circle{
+  stroke:#12263a;
+  stroke-width: 0;
+  transition: stroke-width 0.125s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor:pointer;
+
+}
+
+.emissions-circle:hover{
+  stroke-width:2px;
+}
+
+/* Tooltip */
+
+.tooltip-rect {
+  fill:#eee;
+  stroke: #181d29;
+  rx: 2px;
+}
+
+.tooltip-value{
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* Country view styling */
+
+.axis .tick text {
+  font-family: "Mona Sans", monospace;
+  user-select: none;
+}
+
+.axis .tick line{
+  stroke: #666;
+}
+
+.current-year-line {
+  stroke: #b2b2b2;
+  stroke-width: 2px;
+  stroke-dasharray: 4;
+  pointer-events: none;
+}
+
+.past-year-line {
+  stroke: #b2b2b2;
+  stroke-width: 2px;
+  stroke-dasharray: 3;
+  pointer-events: none;
+  opacity:0.5;
+}
+
+.hover-dot {
+  transition: 0.1s all;
+}
+
+/* Timeline slider styling */
+
+.slider-container {
+  width: 90vw;
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.track {
+  stroke: #41494F;
+  stroke-width: 8px;
+  stroke-linecap: round;
+}
+
+.track-inset {
+  stroke: #1a1a1a;
+  stroke-width: 6px;
+  stroke-linecap: round;
+}
+
+.handle {
+  fill: #e1e1e1;
+  stroke: #fff;
+  stroke-width: 2px;
+  cursor: grab;
+}
+
+.handle:active {
+  cursor: grabbing;
+}
+
+
+.axis-years .tick text {
+  fill: #aaa;
+}
+
+.axis-years path, .axis-years line {
+  stroke: #444;
+}
+
+.timeline-axis-text{
+  transition: all 0.25s;
+}
+
+
+
+/* Legend */
+
+.legend{
+  transition: opacity 0.25s;
+}
+.legend-label{
+  fill: #fff;
+  font-weight: 200;
+  font-size: 0.75rem;
+  opacity:0.8;
+  user-select: none;
+}
+.legend-title{
+  font-weight: 300;
+  font-size: 0.75rem;
+  font-style:italic;
+  fill: #fff;
+  opacity:0.8;
+  user-select: none;
+}
+
+
+
+/* Dropdown */
+
+#emission-dropdown {
+  position: relative;
+  font-family: 'Mona Sans';
+}
+
+#emission-toggle {
+  font-family: 'Mona Sans';
+  font-size: 0.8rem;
+  color: #aaa;
+  background: none;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  padding: 0;
+}
+
+#emission-toggle:hover {
+  color: #fff;
+}
+
+#emission-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: #0F151A;
+  border: 1px solid #3d3d3d;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #aaa;
+  padding: 8px;
+  z-index: 100;
+  white-space: nowrap;
+}
+
+#emission-menu label {
+  display: block;
+  cursor: pointer;
+  user-select: none;
+  padding: 2px 0;
+}
+
+#emission-menu label:hover {
+  color: #fff;
+}
+
+#emission-menu input[type="checkbox"] {
+  accent-color: #4a9aba;
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+}
+
+
+
+
+/* Help popup */
+
+#help-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  font-family: 'Mona Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #fff;
+  background: none;
+  border: 1px solid #3d3d3d;
+  border-radius: 4px;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: color 0.1s, border-color 0.1s;
+}
+
+#help-btn:hover {
+  border-color: #777;
+}
+
+#help-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 200;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+#help-overlay.active {
+  display: flex;
+}
+
+#help-modal {
+  background: #0F151A;
+  border: 1px solid #3d3d3d;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  color: #aaa;
+  font-family: 'Mona Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+#help-modal h2 {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+#help-modal p {
+  margin: 0 0 0.75rem;
+}
+
+#help-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+}
+
+#help-close:hover {
+  color: #fff;
+}
